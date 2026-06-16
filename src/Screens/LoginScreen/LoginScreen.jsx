@@ -1,10 +1,12 @@
-import React, { useEffect, useState } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import { Link, useNavigate, useSearchParams } from 'react-router'
 import useForm from '../../hooks/useForm'
 import { login } from '../../services/authService'
 import useRequest from '../../hooks/useRequest'
+import { AuthContext } from '../../context/AuthContext'
 
 export const LoginScreen = () => {
+    const { login: syncroLogin } = useContext(AuthContext)
     const navigate = useNavigate()
     const {
         sendRequest: sendRequestLogin, 
@@ -39,14 +41,9 @@ export const LoginScreen = () => {
     */
     useEffect(
         () => {
-            console.log('SE EJECUTO EL EFECTO')
             //si el login fue exitoso
             if(loginRequestResponse?.ok){
-                console.log("LOGIN EXITOSO")
-                localStorage.setItem(
-                    'auth_token',
-                    loginRequestResponse?.data?.access_token
-                )
+                syncroLogin(loginRequestResponse?.data?.access_token)
                 navigate('/home')
 
             }
