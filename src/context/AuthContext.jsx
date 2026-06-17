@@ -5,32 +5,32 @@ import { createContext, useEffect, useState } from "react"
 export const AuthContext = createContext({
     isLogged: false,
     userData: null,
-    login: () => {},
-    logout: () => {}
-}) 
+    login: () => { },
+    logout: () => { }
+})
 
-const AUTH_TOKEN_LOCALSTORAGE_KEY = 'auth_token'
+export const AUTH_TOKEN_LOCALSTORAGE_KEY = 'auth_token'
 
 
-export const AuthContextProvider = ({children}) => {
+export const AuthContextProvider = ({ children }) => {
 
     const auth_token = localStorage.getItem(AUTH_TOKEN_LOCALSTORAGE_KEY)
     const [isLogged, setIsLogged] = useState(Boolean(auth_token))
     const [userData, setUserData] = useState(null)
 
-    function login (auth_token) {
+    function login(auth_token) {
         localStorage.setItem(AUTH_TOKEN_LOCALSTORAGE_KEY, auth_token)
         setIsLogged(true)
     }
 
-    function logout (){
+    function logout() {
         localStorage.removeItem(AUTH_TOKEN_LOCALSTORAGE_KEY)
         setIsLogged(false)
         setUserData(false)
     }
 
-    function loadUserSession (){
-        if(auth_token){
+    function loadUserSession() {
+        if (auth_token) {
             const payload = jwtDecode(auth_token)
             setUserData({
                 email: payload.email,

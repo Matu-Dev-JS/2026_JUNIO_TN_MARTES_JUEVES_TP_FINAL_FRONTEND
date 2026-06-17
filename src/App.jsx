@@ -5,6 +5,7 @@ import { RegisterScreen } from './Screens/RegisterScreen/RegisterScreen'
 import { HomeScreen } from './Screens/HomeScreen/HomeScreen'
 import { ResetPasswordScreen } from './Screens/ResetPasswordScreen/ResetPasswordScreen'
 import { AuthContextProvider } from './context/AuthContext'
+import { WorkspacesContextProvider } from './context/WorkspacesContext'
 import AuthMiddleware from './middlewares/AuthMiddleware'
 import AlreadyAuthMiddleware from './middlewares/AlreadyAuthMiddleware'
 
@@ -36,11 +37,12 @@ const App = () => {
         <Route
           element={<AuthMiddleware />}
         >
-          <Route
-            path='/home'
-            element={<HomeScreen />}
-          />
-
+          <Route element={<WorkspacesContextProvider />}>
+            <Route
+              path='/home'
+              element={<HomeScreen />}
+            />
+          </Route>
         </Route>
 
         <Route
